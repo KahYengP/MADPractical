@@ -10,27 +10,33 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
     private boolean following = false;
     private Button followButton;
     private Button messageButton;
 
-    private TextView header;
+    private TextView username;
+    private TextView description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        header = findViewById(R.id.header);
+        username = findViewById(R.id.usernameTxt);
+        description = findViewById(R.id.descriptionTxt);
         messageButton = findViewById(R.id.message_button);
         followButton = findViewById(R.id.follow_button);
 
         Intent receivingEnd = getIntent();
-        String message = receivingEnd.getStringExtra("Key");
+        String username = receivingEnd.getStringExtra("USERNAME");
+        String description = receivingEnd.getStringExtra("DESCRIPTION");
 
-        header.setText("MAD " + message);
+        this.username.setText(username);
+        this.description.setText(description);
+
         followButton.setOnClickListener(view -> {
             if(!following){
                 followButton.setText("Unfollow");
@@ -40,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
             else {
                 followButton.setText("follow");
                 Toast.makeText(getApplicationContext(), "Unfollow", Toast.LENGTH_SHORT).show();
-
-
             }
 
             following = !following;
@@ -52,10 +56,6 @@ public class MainActivity extends AppCompatActivity {
             Intent activityMessage = new Intent(MainActivity.this, MessageGroup.class);
             startActivity(activityMessage);
         });
-
-
-
-
 
     }
 }
